@@ -12,7 +12,7 @@ const useMovies = (type) => {
     }
   };
 
-  const fetchSelectedMovies = (page) => {
+  const dispatchMovies = (page) => {
     if (type === "discover") {
       return fetchMovies(page);
     } else {
@@ -23,7 +23,7 @@ const useMovies = (type) => {
   return {
     movieOrder: useSelector((state) => state[moviesKey()].order),
     movies: useSelector((state) => state[moviesKey()].entries),
-    getMovies: (page) => dispatch(fetchSelectedMovies(page)),
+    getMovies: (page) => dispatch(dispatchMovies(page)),
   };
 };
 

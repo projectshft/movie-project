@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Movie from "./Movie";
-import WatchList from "./WatchList";
+import { useSelector } from "react-redux";
+import InfiniteScroll from "react-infinite-scroller";
 import useMovies from "../useMoviesHook";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMovies } from '../actions';
-import InfiniteScroll from 'react-infinite-scroller';
 
 const MovieList = ({ type }) => {
   const [hasMoreItems, setHasMoreItems] = useState(true);
-  const totalPages = useSelector(state => state.total_pages);
-  const dispatch = useDispatch();
+  const totalPages = useSelector((state) => state.total_pages);
 
   const { movieOrder, movies, getMovies } = useMovies(type);
 
@@ -25,30 +22,26 @@ const MovieList = ({ type }) => {
   const movieComponents = movieOrder.map((id) => {
     const movie = movies[id];
 
-    return <Movie id={movie.id} key={id} title={movie.title} img={movie.poster_path} />
+    return (
+      <Movie
+        id={movie.id}
+        key={id}
+        title={movie.title}
+        img={movie.poster_path}
+      />
+    );
   });
 
-  if (type === 'discover') {
+  if (type === "discover") {
     return (
-      <InfiniteScroll
-        loadMore={loadItems}
-        pageStart={0}
-        hasMore={hasMoreItems}>
-        <MovieGrid>
-          {movieComponents}
-        </MovieGrid>
+      <InfiniteScroll loadMore={loadItems} pageStart={0} hasMore={hasMoreItems}>
+        <MovieGrid>{movieComponents}</MovieGrid>
       </InfiniteScroll>
-    )
+    );
   } else {
-    return (
-      <WatchList fetchMovies={getMovies}>
-        <MovieGrid>
-            {movieComponents}
-        </MovieGrid>
-      </WatchList>
-    )
+    return null;
   }
-}
+};
 
 export default MovieList;
 
