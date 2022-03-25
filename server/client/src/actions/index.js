@@ -76,7 +76,7 @@ export const addMovieToWatchList = (movie) => (dispatch) => {
   };
 
   axios
-    .post("http://localhost:5000/api/watchList", { movie }, config)
+    .post("http://localhost:5000/api/watchlist", { movie }, config)
     .then(function (response) {
       console.log(response)
       dispatch({ type: ADD_MOVIE, payload: response.data });
@@ -93,7 +93,7 @@ export const fetchWatchListMovies = () => (dispatch) => {
     },
   };
 
-  axios.get("http://localhost:5000/api/watchList", config)
+  axios.get("http://localhost:5000/api/watchlist", config)
     .then((response) => {
       console.log(response)
       dispatch({type: FETCH_WATCHLIST_MOVIES, payload: response.data})

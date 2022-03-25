@@ -1,50 +1,60 @@
 import React from "react";
 import { NavLink, Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { useSelector, useDispatch } from 'react-redux';
-import { signout } from '../actions'
+import { useSelector, useDispatch } from "react-redux";
+import { signout } from "../actions";
 
 const Nav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const authenticated = useSelector(state => state.auth.authenticated);
-  const email = useSelector(state => state.auth.email);
+  const authenticated = useSelector((state) => state.auth.authenticated);
+  const email = useSelector((state) => state.auth.email);
+  const watchListCount = useSelector((state) => state.watchListCount);
 
   const handleSignOutClick = () => {
-    dispatch(signout(() => {
-      history.push('/');
-    }));
+    dispatch(
+      signout(() => {
+        history.push("/");
+      })
+    );
   };
 
   const renderLinks = () => {
     if (authenticated) {
       return (
         <React.Fragment>
+          <Link to="/watch-list">
+            <li>Watch List: {watchListCount}</li>
+          </Link>
           <li>{email}</li>
-          <li><LinkButton href="#" onClick={handleSignOutClick}>Sign Out</LinkButton></li>
+          <li>
+            <LinkButton href="#" onClick={handleSignOutClick}>
+              Sign Out
+            </LinkButton>
+          </li>
         </React.Fragment>
       );
     } else {
       return (
         <React.Fragment>
-          <li><Link to="/signup">Sign Up</Link></li>
-          <li><Link to="/signin">Sign In</Link></li>
+          <li>
+            <Link to="/signup">Sign Up</Link>
+          </li>
+          <li>
+            <Link to="/signin">Sign In</Link>
+          </li>
         </React.Fragment>
       );
     }
-  }
+  };
 
   return (
     <NavContainer>
       <div id="logo">
-        <NavLink to="/">
-          MovieFinder
-        </NavLink>
+        <NavLink to="/">MovieFinder</NavLink>
       </div>
 
-      <NavUl>
-        {renderLinks()}
-      </NavUl>
+      <NavUl>{renderLinks()}</NavUl>
     </NavContainer>
   );
 };
@@ -95,4 +105,4 @@ const LinkButton = styled.button`
   color: whitesmoke;
   font-family: Oswald, sans-serif;
   font-size: 20px;
-`
+`;

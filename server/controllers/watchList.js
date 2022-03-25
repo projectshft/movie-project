@@ -19,7 +19,7 @@ exports.addMovieToList = function (req, res) {
 };
 
 exports.getWatchList = function (req, res) {
-  User.find({ _id: req.user._id }, function (err, user) {
+  User.findOne({ _id: req.user._id }, function (err, user) {
     res.send({
       movies: user.watchList,
       watchListCount: user.watchList.length,

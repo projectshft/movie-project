@@ -4,6 +4,7 @@ import Movie from "./Movie";
 import { useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroller";
 import useMovies from "../useMoviesHook";
+import WatchList from "./WatchList";
 
 const MovieList = ({ type }) => {
   const [hasMoreItems, setHasMoreItems] = useState(true);
@@ -39,7 +40,11 @@ const MovieList = ({ type }) => {
       </InfiniteScroll>
     );
   } else {
-    return null;
+    return (
+      <WatchList fetchMovies={getMovies}>
+        <MovieGrid>{movieComponents}</MovieGrid>
+      </WatchList>
+    )
   }
 };
 
@@ -53,3 +58,4 @@ const MovieGrid = styled.div`
   padding: 2em;
   margin: 0 auto;
 `;
+
